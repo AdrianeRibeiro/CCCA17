@@ -2,13 +2,9 @@ import crypto from "crypto"
 import { validateCpf } from "./validateCpf"
 import AccountDAO from "./resource"
 import MailerGateway from "./MailerGateway"
+import UseCase from "./UseCase"
 
-export default interface AccountService {
-  signup (input: any): Promise<any>
-  getAccount (accountId: any): Promise<any>
-}
-
-export class AccountServiceProduction implements AccountService {
+export default class Signup implements UseCase{
   accountDAO: AccountDAO
   mailerGateway: MailerGateway
 
@@ -17,7 +13,7 @@ export class AccountServiceProduction implements AccountService {
     this.mailerGateway = new MailerGateway()
   }
 
-  async signup (input: any): Promise<any> {
+  async execute(input: any): Promise<any> {
     const account = { accountId: crypto.randomUUID(), ...input }
     const existingAccount = await this.accountDAO.getAccountByEmail(input.email)
     if (existingAccount) throw new Error("Account already exists")
@@ -29,10 +25,5 @@ export class AccountServiceProduction implements AccountService {
     await this.accountDAO.saveAccount(account)
     await this.mailerGateway.send(account.email, "Welcome!", "")
     return { accountId: account.accountId }
-  }
-  
-  async getAccount (accountId: any): Promise<any> {
-   const account = await this.accountDAO.getAccountById(accountId)
-   return account
   }  
 }
