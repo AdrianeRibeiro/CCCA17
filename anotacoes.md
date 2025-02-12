@@ -18,3 +18,8 @@
 - Tratamento de requisições e respostas HTTP, lidando com parâmetros, acesso ao banco, SQL pertence a essa camada, interação com API externa.
 
 - O motivo do repository existir é conhecer a entity. Papel do repository é persistir e retornar o object.
+
+Account e cpf: entities
+signup e account: usecases
+repository: interface adapter
+api: interface adapter

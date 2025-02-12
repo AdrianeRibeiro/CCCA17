@@ -1,16 +1,17 @@
 import sinon from "sinon"
 import MailerGateway from "../src/MailerGateway"
-import { AccountDAODatabase, AccountDAOMemory } from "../src/resource"
+import { AccountRepositoryDatabase, AccountRepositoryMemory } from "../src/AccountRepository"
 import Signup from "../src/Signup"
 import GetAccount from "../src/GetAccount"
+import Account from "../src/Account"
 
 let signup: Signup
 let getAccount: GetAccount
 
 beforeEach(function () {
-  const accountDAO = new AccountDAODatabase();
-	signup = new Signup(accountDAO)
-  getAccount = new GetAccount(accountDAO)
+  const accountRepository = new AccountRepositoryDatabase();
+	signup = new Signup(accountRepository)
+  getAccount = new GetAccount(accountRepository)
 })
 
 test("Deve criar uma conta para o passageiro", async function () {
@@ -83,7 +84,7 @@ test("Deve criar uma conta de motorista", async function () {
   expect(outputGetAccount.name).toBe(input.name)
   expect(outputGetAccount.email).toBe(input.email)
   expect(outputGetAccount.cpf).toBe(input.cpf)
-  expect(outputGetAccount.car_plate).toBe(input.carPlate)
+  expect(outputGetAccount.carPlate).toBe(input.carPlate)
 })
 
 test("Não deve criar uma conta de motorista com a placa inválida", async function () {
@@ -116,34 +117,37 @@ test("Deve criar uma conta de passageiro com stub do MailerGateway", async funct
   stub.restore()
 })
 
-test("Deve criar uma conta de passageiro com stub do AccountDAO", async function () {
-  const input = {
+test("Deve criar uma conta de passageiro com stub do AccountRepository", async function () {
+  const email = `john.doe${Math.random()}@gmail.com`
+  const inputSignup = {
     name: "John Doe",
-    email: `john.doe${Math.random()}@gmail.com`,
+    email: email,
     cpf: "97456321558",
     isPassenger: true
   }
 
-  const stubSaveAccount = sinon.stub(AccountDAODatabase.prototype, "saveAccount").resolves()
-  const stubGetAccountByEmail = sinon.stub(AccountDAODatabase.prototype, "getAccountByEmail").resolves(undefined)
-  const stubGetAccountById = sinon.stub(AccountDAODatabase.prototype, "getAccountById").resolves(input)
+  const inputSignupStub = Account.create("John Doe", email, "97456321558", "", true, false)
 
-  const outputSignup = await signup.execute(input)
+  const stubSaveAccount = sinon.stub(AccountRepositoryDatabase.prototype, "saveAccount").resolves()
+  const stubGetAccountByEmail = sinon.stub(AccountRepositoryDatabase.prototype, "getAccountByEmail").resolves(undefined)
+  const stubGetAccountById = sinon.stub(AccountRepositoryDatabase.prototype, "getAccountById").resolves(inputSignupStub)
+
+  const outputSignup = await signup.execute(inputSignup)
   expect(outputSignup.accountId).toBeDefined()
   const outputGetAccount = await getAccount.execute(outputSignup.accountId)
-  expect(outputGetAccount.name).toBe(input.name)
-  expect(outputGetAccount.email).toBe(input.email)
-  expect(outputGetAccount.cpf).toBe(input.cpf)
+  expect(outputGetAccount.name).toBe(inputSignup.name)
+  expect(outputGetAccount.email).toBe(inputSignup.email)
+  expect(outputGetAccount.cpf).toBe(inputSignup.cpf)
 
   stubSaveAccount.restore()
   stubGetAccountByEmail.restore()
   stubGetAccountById.restore()
 })
 
-test("Deve criar uma conta de passageiro com fake do AccountDAO", async function () {
-  const accountDAO = new AccountDAOMemory()
-  signup = new Signup(accountDAO)
-  getAccount = new GetAccount(accountDAO)
+test("Deve criar uma conta de passageiro com fake do AccountRepository", async function () {
+  const accountRepository = new AccountRepositoryMemory()
+  signup = new Signup(accountRepository)
+  getAccount = new GetAccount(accountRepository)
   const input = {
     name: "John Doe",
     email: `john.doe${Math.random()}@gmail.com`,
