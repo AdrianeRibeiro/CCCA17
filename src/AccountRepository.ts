@@ -1,5 +1,5 @@
-import pgp from "pg-promise"
 import Account from "./Account"
+import DatabaseConnection from "./DatabaseConnection"
 
 // AccountRepository é um padrão de persistência de objetos de domínio
 export default interface AccountRepository {
@@ -11,12 +11,11 @@ export default interface AccountRepository {
 // Padrão DAO: Data Access Object - estamos lidando com a mesma tabela. Esse padrão expõe operações da mesma tabela
 // Repository implica em objeto de domínio
 export class AccountRepositoryDatabase implements AccountRepository {
-  private URL_CONNECTION = "postgres://qqwztrsw:uzfxPCdWpb82K7J2O84VGVg5_lu12ibp@kesavan.db.elephantsql.com/qqwztrsw"
+
+  constructor (readonly connection: DatabaseConnection) {}
 
   async getAccountByEmail (email: string): Promise<Account | undefined> {
-    const connection = pgp()(this.URL_CONNECTION)
-    const [accountData] = await connection.query("select * from cccat17.account where email = $1", [email])
-    await connection.$pool.end()
+    const [accountData] = await this.connection.query("select * from cccat17.account where email = $1", [email])
 
     if (!accountData) return
 
@@ -24,9 +23,7 @@ export class AccountRepositoryDatabase implements AccountRepository {
   }
   
   async getAccountById (accountId: string) {
-    const connection = pgp()(this.URL_CONNECTION)
-    const [accountData] = await connection.query("select * from cccat17.account where account_id = $1", [accountId])
-    await connection.$pool.end()
+    const [accountData] = await this.connection.query("select * from cccat17.account where account_id = $1", [accountId])
 
     if(!accountData) throw new Error("Account not found")
 
@@ -34,9 +31,7 @@ export class AccountRepositoryDatabase implements AccountRepository {
   }
   
   async saveAccount (account: Account) {
-    const connection = pgp()(this.URL_CONNECTION)
-    await connection.query("insert into cccat17.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) values ($1, $2, $3, $4, $5, $6, $7)", [account.accountId, account.name, account.email, account.getCpf(), account.carPlate, !!account.isPassenger, !!account.isDriver])
-    await connection.$pool.end();
+    await this.connection.query("insert into cccat17.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) values ($1, $2, $3, $4, $5, $6, $7)", [account.accountId, account.name, account.email, account.getCpf(), account.carPlate, !!account.isPassenger, !!account.isDriver])
   }
 }
 

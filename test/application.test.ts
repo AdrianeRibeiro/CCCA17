@@ -4,12 +4,15 @@ import { AccountRepositoryDatabase, AccountRepositoryMemory } from "../src/Accou
 import Signup from "../src/Signup"
 import GetAccount from "../src/GetAccount"
 import Account from "../src/Account"
+import DatabaseConnection, { PgPromiseAdapter } from "../src/DatabaseConnection"
 
+let connection: DatabaseConnection
 let signup: Signup
 let getAccount: GetAccount
 
 beforeEach(function () {
-  const accountRepository = new AccountRepositoryDatabase();
+  connection = new PgPromiseAdapter();
+  const accountRepository = new AccountRepositoryDatabase(connection);
 	signup = new Signup(accountRepository)
   getAccount = new GetAccount(accountRepository)
 })
@@ -204,4 +207,8 @@ test("Deve criar uma conta com mock no MailerGateway", async function () {
   expect(outputGetAccount.cpf).toBe(input.cpf)
 
   mockMailerGateway.verify()
+})
+
+afterEach(async () => {
+  await connection.close()
 })
