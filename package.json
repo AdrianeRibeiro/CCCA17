@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/hapi": "^21.3.12",
     "@types/jest": "^29.5.14",
     "@types/sinon": "^17.0.3",
     "axios": "^1.7.7",
