@@ -8,7 +8,7 @@ export default interface DatabaseConnection {
 export class PgPromiseAdapter implements DatabaseConnection {
   connection: any
 
-  private URL_CONNECTION = "postgres://qqwztrsw:uzfxPCdWpb82K7J2O84VGVg5_lu12ibp@kesavan.db.elephantsql.com/qqwztrsw"
+  private URL_CONNECTION = "postgres://postgres:123456@localhost:5432/app"
 
   constructor() {
     this.connection = pgp()(this.URL_CONNECTION)

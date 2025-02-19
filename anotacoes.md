@@ -23,3 +23,10 @@ Account e cpf: entities
 signup e account: usecases
 repository: interface adapter
 api: interface adapter
+
+## Comandos 
+npx nodemon src/main.ts
+docker exec -it <NOME_DO_CONTAINER> psql -U postgres -d appp
+
+docker-compose down -v  # Remove tudo, incluindo os dados
+docker-compose up -d    # Sobe o banco e recria as tabelas
