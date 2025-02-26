@@ -1,12 +1,6 @@
 import Account from "./Account"
+import AccountRepository from "./application/repository/AccountRepository"
 import DatabaseConnection from "./DatabaseConnection"
-
-// AccountRepository é um padrão de persistência de objetos de domínio
-export default interface AccountRepository {
-  getAccountByEmail (email: string): Promise<Account | undefined>
-  getAccountById (accountId: string): Promise<Account>
-  saveAccount (account: Account): Promise<void>
-}
 
 // Padrão DAO: Data Access Object - estamos lidando com a mesma tabela. Esse padrão expõe operações da mesma tabela
 // Repository implica em objeto de domínio

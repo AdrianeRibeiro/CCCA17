@@ -1,7 +1,7 @@
 import API from "./AccountController"
-import GetAccount from "./GetAccount"
+import GetAccount from "./application/usecase/GetAccount"
 import { AccountRepositoryDatabase } from "./AccountRepository"
-import Signup from "./Signup"
+import Signup from "./application/usecase/Signup"
 import { PgPromiseAdapter } from "./DatabaseConnection";
 import { ExpressAdapter } from "./HttpServer";
 import AccountController from "./AccountController";

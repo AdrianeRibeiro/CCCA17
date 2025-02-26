@@ -1,8 +1,8 @@
 import sinon from "sinon"
 import MailerGateway from "../src/MailerGateway"
 import { AccountRepositoryDatabase, AccountRepositoryMemory } from "../src/AccountRepository"
-import Signup from "../src/Signup"
-import GetAccount from "../src/GetAccount"
+import Signup from "../src/application/usecase/Signup"
+import GetAccount from "../src/application/usecase/GetAccount"
 import Account from "../src/Account"
 import DatabaseConnection, { PgPromiseAdapter } from "../src/DatabaseConnection"
 
