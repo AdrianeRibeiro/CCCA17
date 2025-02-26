@@ -1,4 +1,4 @@
-import MailerGateway from "./application/gateway/MailerGateway";
+import MailerGateway from "../../application/gateway/MailerGateway";
 
 export default class MailerGatewayFake implements MailerGateway {
 

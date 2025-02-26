@@ -1,11 +1,11 @@
 import sinon from "sinon"
 import MailerGateway from "../src/application/gateway/MailerGateway"
-import { AccountRepositoryDatabase, AccountRepositoryMemory } from "../src/AccountRepository"
+import { AccountRepositoryDatabase, AccountRepositoryMemory } from "../src/infra/repository/AccountRepository"
 import Signup from "../src/application/usecase/Signup"
 import GetAccount from "../src/application/usecase/GetAccount"
 import Account from "../src/domain/Account"
-import DatabaseConnection, { PgPromiseAdapter } from "../src/DatabaseConnection"
-import MailerGatewayFake from "../src/MailerGatewayFake"
+import DatabaseConnection, { PgPromiseAdapter } from "../src/infra/database/DatabaseConnection"
+import MailerGatewayFake from "../src/infra/gateway/MailerGatewayFake"
 
 let connection: DatabaseConnection
 let signup: Signup

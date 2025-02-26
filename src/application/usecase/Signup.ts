@@ -1,4 +1,4 @@
-import MailerGatewayFake from "../../MailerGatewayFake"
+import MailerGatewayFake from "../../infra/gateway/MailerGatewayFake"
 import UseCase from "../../UseCase"
 import Account from "../../domain/Account"
 import MailerGateway from "../gateway/MailerGateway"

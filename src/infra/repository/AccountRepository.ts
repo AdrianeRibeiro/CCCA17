@@ -1,6 +1,6 @@
-import Account from "./domain/Account"
-import AccountRepository from "./application/repository/AccountRepository"
-import DatabaseConnection from "./DatabaseConnection"
+import Account from "../../domain/Account"
+import AccountRepository from "../../application/repository/AccountRepository"
+import DatabaseConnection from "../database/DatabaseConnection"
 
 // Padrão DAO: Data Access Object - estamos lidando com a mesma tabela. Esse padrão expõe operações da mesma tabela
 // Repository implica em objeto de domínio
