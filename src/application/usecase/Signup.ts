@@ -1,5 +1,5 @@
 import MailerGatewayFake from "../../infra/gateway/MailerGatewayFake"
-import UseCase from "../../UseCase"
+import UseCase from "./UseCase"
 import Account from "../../domain/Account"
 import MailerGateway from "../gateway/MailerGateway"
 import AccountRepository from "../repository/AccountRepository"
