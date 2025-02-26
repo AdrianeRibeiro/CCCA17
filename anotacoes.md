@@ -25,6 +25,8 @@ repository: interface adapter
 api: interface adapter
 
 ## Comandos 
+lsof -i :3000
+
 npx nodemon src/main.ts
 docker exec -it <NOME_DO_CONTAINER> psql -U postgres -d appp
 

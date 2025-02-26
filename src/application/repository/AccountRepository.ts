@@ -1,4 +1,4 @@
-import Account from "../../Account"
+import Account from "../../domain/Account"
 
 // AccountRepository é um padrão de persistência de objetos de domínio
 export default interface AccountRepository {

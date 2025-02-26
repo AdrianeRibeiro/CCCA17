@@ -1,19 +1,22 @@
 import sinon from "sinon"
-import MailerGateway from "../src/MailerGateway"
+import MailerGateway from "../src/application/gateway/MailerGateway"
 import { AccountRepositoryDatabase, AccountRepositoryMemory } from "../src/AccountRepository"
 import Signup from "../src/application/usecase/Signup"
 import GetAccount from "../src/application/usecase/GetAccount"
-import Account from "../src/Account"
+import Account from "../src/domain/Account"
 import DatabaseConnection, { PgPromiseAdapter } from "../src/DatabaseConnection"
+import MailerGatewayFake from "../src/MailerGatewayFake"
 
 let connection: DatabaseConnection
 let signup: Signup
 let getAccount: GetAccount
+let mailerGateway: MailerGateway
 
 beforeEach(function () {
   connection = new PgPromiseAdapter();
   const accountRepository = new AccountRepositoryDatabase(connection);
-	signup = new Signup(accountRepository)
+  mailerGateway = new MailerGatewayFake()
+	signup = new Signup(accountRepository, mailerGateway)
   getAccount = new GetAccount(accountRepository)
 })
 
@@ -109,7 +112,7 @@ test("Deve criar uma conta de passageiro com stub do MailerGateway", async funct
     isPassenger: true
   }
 
-  const stub = sinon.stub(MailerGateway.prototype, "send").resolves()
+  const stub = sinon.stub(MailerGatewayFake.prototype, "send").resolves()
   const outputSignup = await signup.execute(input)
   expect(outputSignup.accountId).toBeDefined()
   const outputGetAccount = await getAccount.execute(outputSignup.accountId)
@@ -167,7 +170,7 @@ test("Deve criar uma conta de passageiro com fake do AccountRepository", async f
 })
 
 test("Deve criar uma conta de passageiro com spy no MailerGateway", async function () {
-  const spySend = sinon.spy(MailerGateway.prototype, "send")
+  const spySend = sinon.spy(MailerGatewayFake.prototype, "send")
   const input = {
     name: "John Doe",
     email: `john.doe${Math.random()}@gmail.com`,
@@ -196,7 +199,7 @@ test("Deve criar uma conta com mock no MailerGateway", async function () {
     isPassenger: true
   }
 
-  const mockMailerGateway = sinon.mock(MailerGateway.prototype)
+  const mockMailerGateway = sinon.mock(MailerGatewayFake.prototype)
   mockMailerGateway.expects("send").once().withArgs(input.email, "Welcome!", "").once()
 
   const outputSignup = await signup.execute(input)
