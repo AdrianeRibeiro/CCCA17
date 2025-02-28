@@ -1,11 +1,11 @@
 import sinon from "sinon"
 import MailerGateway from "../../src/application/gateway/MailerGateway"
 import { AccountRepositoryDatabase, AccountRepositoryMemory } from "../../src/infra/repository/AccountRepository"
-import Signup from "../../src/application/usecase/Signup"
-import GetAccount from "../../src/application/usecase/GetAccount"
 import Account from "../../src/domain/Account"
 import DatabaseConnection, { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection"
 import MailerGatewayFake from "../../src/infra/gateway/MailerGatewayFake"
+import Signup from "../../src/application/usecase/account/Signup"
+import GetAccount from "../../src/application/usecase/account/GetAccount"
 
 let connection: DatabaseConnection
 let signup: Signup
@@ -82,6 +82,7 @@ test("Deve criar uma conta de motorista", async function () {
     email: `john.doe${Math.random()}@gmail.com`,
     cpf: "97456321558",
     carPlate: "ABC1234",
+    isPassenger: false,
     isDriver: true
   }
   const outputSignup = await signup.execute(input)
@@ -99,6 +100,7 @@ test("Não deve criar uma conta de motorista com a placa inválida", async funct
     email: `john.doe${Math.random()}@gmail.com`,
     cpf: "97456321558",
     carPlate: "ABC123",
+    isPassenger: false,
     isDriver: true
   }
   expect(() => signup.execute(input)).rejects.toThrowError("Invalid car plate")

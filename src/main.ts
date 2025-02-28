@@ -1,10 +1,10 @@
 import API from "./infra/controller/AccountController"
-import GetAccount from "./application/usecase/GetAccount"
 import { AccountRepositoryDatabase } from "./infra/repository/AccountRepository"
-import Signup from "./application/usecase/Signup"
 import { PgPromiseAdapter } from "./infra/database/DatabaseConnection";
 import { ExpressAdapter } from "./infra/http/HttpServer";
 import AccountController from "./infra/controller/AccountController";
+import Signup from "./application/usecase/account/Signup";
+import GetAccount from "./application/usecase/account/GetAccount";
 
 const connection = new PgPromiseAdapter();
 const accountRepository = new AccountRepositoryDatabase(connection)

@@ -1,5 +1,5 @@
-import UseCase from "./UseCase"
-import AccountRepository from "../repository/AccountRepository"
+import AccountRepository from "../../repository/AccountRepository"
+import UseCase from "../UseCase"
 
 export default class GetAccount implements UseCase {
   accountRepository: AccountRepository
@@ -9,7 +9,7 @@ export default class GetAccount implements UseCase {
   }
   
   // se eu exponho a entidade eu revelo detalhes dela e crio acoplamento
-  async execute(accountId: any): Promise<Output> {
+  async execute(accountId: string): Promise<Output> {
     const account = await this.accountRepository.getAccountById(accountId)
     return {
       accountId: account.accountId,
