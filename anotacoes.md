@@ -32,3 +32,15 @@ docker exec -it <NOME_DO_CONTAINER> psql -U postgres -d appp
 
 docker-compose down -v  # Remove tudo, incluindo os dados
 docker-compose up -d    # Sobe o banco e recria as tabelas
+
+## DDD
+- Entities: abstraem regras independentes. Tem identidade e estado, podem sofrer mutação ao longo do tempo.
+Exemplos: 
+cpf: é um valor, não é uma entidade.
+coordenada: é um valor tbm, se mudar valor é outra coisa.
+nome, email, placa de carro é a mesma coisa.
+
+account e ride são entidades, posso alterar ela.
+
+Value Object representa um valor. Exemplo: CPF, Senha, Cor, Coordenada, E-mail..
+

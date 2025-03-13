@@ -19,7 +19,7 @@ export default class Signup implements UseCase{
     
     const account = Account.create(input.name, input.email, input.cpf, input.carPlate || "", !!input.isPassenger, !!input.isDriver)
     await this.accountRepository.saveAccount(account)
-    await this.mailerGateway.send(account.email, "Welcome!", "")
+    await this.mailerGateway.send(account.getEmail(), "Welcome!", "")
     return { accountId: account.accountId }
   }  
 }
