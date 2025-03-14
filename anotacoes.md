@@ -31,6 +31,8 @@ npx nodemon src/main.ts
 docker exec -it <NOME_DO_CONTAINER> psql -U postgres -d appp
 
 docker-compose down -v  # Remove tudo, incluindo os dados
+
+docker stop $(docker ps -q)
 docker-compose up -d    # Sobe o banco e recria as tabelas
 
 ## DDD
@@ -43,4 +45,5 @@ nome, email, placa de carro é a mesma coisa.
 account e ride são entidades, posso alterar ela.
 
 Value Object representa um valor. Exemplo: CPF, Senha, Cor, Coordenada, E-mail..
+Papel dele é proteger um valor
 
