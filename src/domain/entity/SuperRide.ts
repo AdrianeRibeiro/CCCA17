@@ -1,6 +1,6 @@
 import crypto from "crypto"
 import Coord from "../Coord"
-import Account from "../Account"
+import Account from "./Account"
 
 export default class SuperRide {
   private from: Coord

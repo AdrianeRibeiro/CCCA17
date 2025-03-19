@@ -1,7 +1,7 @@
 import sinon from "sinon"
 import MailerGateway from "../../src/application/gateway/MailerGateway"
 import { AccountRepositoryDatabase, AccountRepositoryMemory } from "../../src/infra/repository/AccountRepository"
-import Account from "../../src/domain/Account"
+import Account from "../../src/domain/entity/Account"
 import DatabaseConnection, { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection"
 import MailerGatewayFake from "../../src/infra/gateway/MailerGatewayFake"
 import Signup from "../../src/application/usecase/account/Signup"

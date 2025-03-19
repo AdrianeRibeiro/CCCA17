@@ -1,8 +1,8 @@
 import crypto from "crypto"
-import Cpf from "./Cpf"
-import Email from "./Email"
-import Name from "./Name"
-import CarPlate from "./CarPlate"
+import Cpf from "../Cpf"
+import Email from "../Email"
+import Name from "../Name"
+import CarPlate from "../CarPlate"
 
 export default class Account {
   private cpf: Cpf
