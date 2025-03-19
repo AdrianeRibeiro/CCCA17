@@ -2,7 +2,7 @@ import RideRepository from "../../application/repository/RideRepository";
 import SuperRideRepository from "../../application/repository/SuperRideRepository";
 import Account from "../../domain/Account";
 import Ride from "../../domain/entity/Ride";
-import SuperRide from "../../domain/SuperRide";
+import SuperRide from "../../domain/entity/SuperRide";
 import DatabaseConnection from "../database/DatabaseConnection";
 
 export default class SuperRideRepositoryDatabase implements SuperRideRepository {

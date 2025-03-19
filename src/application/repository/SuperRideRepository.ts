@@ -1,5 +1,5 @@
 import Ride from "../../domain/entity/Ride"
-import SuperRide from "../../domain/SuperRide"
+import SuperRide from "../../domain/entity/SuperRide"
 
 // repo faz a mediação entre a camada de domínio e a persistência,ou restaurar o estado de uma objeto
 export default interface RideRepositoryRepository {
