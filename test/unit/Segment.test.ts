@@ -1,5 +1,5 @@
 import Coord from "../../src/domain/vo/Coord";
-import DistanceCalculator from "../../src/domain/DistanceCalculator";
+import DistanceCalculator from "../../src/domain/service/DistanceCalculator";
 import Segment from "../../src/domain/vo/Segment";
 
 test("Deve calcular a distância entre duas coordenadas", function () {
