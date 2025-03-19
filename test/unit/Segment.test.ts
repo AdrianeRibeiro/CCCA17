@@ -1,6 +1,6 @@
-import Coord from "../../src/domain/Coord";
+import Coord from "../../src/domain/vo/Coord";
 import DistanceCalculator from "../../src/domain/DistanceCalculator";
-import Segment from "../../src/domain/Segment";
+import Segment from "../../src/domain/vo/Segment";
 
 test("Deve calcular a distância entre duas coordenadas", function () {
   const from = new Coord(-27.584905257808835, -48.545022195325124);

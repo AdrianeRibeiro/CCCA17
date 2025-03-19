@@ -1,4 +1,4 @@
-import Coord from "../../src/domain/Coord";
+import Coord from "../../src/domain/vo/Coord";
 import DistanceCalculator from "../../src/domain/DistanceCalculator";
 
 test("Deve calcular a distância entre duas coordenadas", function () {

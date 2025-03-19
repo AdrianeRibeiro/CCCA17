@@ -1,5 +1,5 @@
-import Period from "../../src/domain/Period";
-import DateUtil from "../../src/domain/Period";
+import Period from "../../src/domain/vo/Period";
+import DateUtil from "../../src/domain/vo/Period";
 
 test("Deve calcular a diferença entre duas data em milisegundos", function () {
   const start = new Date("2023-01-10T10:00:00");

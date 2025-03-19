@@ -1,4 +1,4 @@
-import Coord from "../../src/domain/Coord"
+import Coord from "../../src/domain/vo/Coord"
 
 test("Não deve criar uma coordenada com latitude inválida", function () { 
   expect(() => new Coord(-180, 180)).toThrow("Invalid latitude")
