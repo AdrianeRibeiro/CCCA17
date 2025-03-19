@@ -1,7 +1,7 @@
 import RideRepository from "../../application/repository/RideRepository";
 import SuperRideRepository from "../../application/repository/SuperRideRepository";
 import Account from "../../domain/Account";
-import Ride from "../../domain/Ride";
+import Ride from "../../domain/entity/Ride";
 import SuperRide from "../../domain/SuperRide";
 import DatabaseConnection from "../database/DatabaseConnection";
 

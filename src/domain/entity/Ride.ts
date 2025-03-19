@@ -1,5 +1,5 @@
 import crypto from "crypto"
-import Coord from "./Coord"
+import Coord from "../Coord"
 
 export default class Ride {
   private from: Coord
