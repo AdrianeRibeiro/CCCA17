@@ -1,6 +1,7 @@
 import crypto from "crypto"
 import Coord from "../vo/Coord"
 
+// Entity forma um Aggregate liderado por Ride (root) que contém Coord
 export default class Ride {
   private from: Coord
   private to: Coord

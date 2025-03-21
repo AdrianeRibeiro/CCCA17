@@ -4,6 +4,7 @@ import Email from "../vo/Email"
 import Name from "../vo/Name"
 import CarPlate from "../vo/CarPlate"
 
+// Entity forma um Aggregate liderado por Account (root) que contém Nome, Email, Cpf e CarPlate
 export default class Account {
   private cpf: Cpf
   private email: Email
