@@ -54,10 +54,36 @@
 
 - Grandes aggregates podem trazer desperdício de memória, além de sobrecarregar o banco de dados sem necessidade já que nem sempre a camada de aplicação estará interessada em utilizá-la na íntegra.
 
-### Aggregates <A>
+### Aggregates
 
-- Um aggregate é um agrupamento, ou cluster, de objetos de domínio como entities e value objects, estabelecendo o relacionamento entre eles.
+- Um aggregate é um agrupamento, ou cluster, de objetos de domínio como entities e value objects, estabelecendo o relacionamento entre eles. Exemplo: um Pedido que contém Itens do Pedido.
 
 - Todas as operações são realizadas por meio da raíz, que é uma entity ou aggregate root <AR>.
 
-slide 30
+- Boas práticas na criação de aggregates:
+
+    - Crie aggregates pequenos: comece sempre com apenas uma entidade e cresça de acordo com as necessidades.
+
+    - Referencie outros aggregates por identidade: mantenha apenas a referência para outros aggregates, isso reduz a quantidade de memória e o esforço que o repositório faz para recuperá-los.
+
+- Os aggregates não precisam refletir a base de dados. Isso faria o aggregate ser muito grande e consumir muita memória, tornando o repositório mais complexo do que deveria.
+
+- Um aggregate pode referenciar outros aggregates? 
+    - Pode, mas por identidade.
+
+- Um aggregate pode ter apenas uma entidade? 
+    - Pode, mas quanto menor melhor.
+
+- Uma entidade que faz parte de um aggregate pode fazer parte de outro? 
+    - Não é ideal, uma mudança na entidade utilizada por um aggregate poderia causar a quebra em outro.
+
+### Repositories
+
+- É uma extensão do domínio responsável por realizar a persistência dos aggregate separando o domínio da infraestrutura.
+
+- Posso obter apenas parte do aggregate? 
+    - Isso significa que pode ser que o aggregate seja grande de mais e poderia ser quebrado em aggregates menores.
+
+- Posso gerar dados para a emissão de um relatório a partir de um repository?
+    - Renderizar relatórios a partir de respositories pode ser excessivamente complexo. Prefira a utilização de CQRS com a criação de consultas separadas.
+
