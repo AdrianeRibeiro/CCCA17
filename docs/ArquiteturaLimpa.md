@@ -1,6 +1,6 @@
 ### Definição
 
-- A CA é um modelo que tem como objetivo desacoplar as regras de negócio, ou domínio, da aplicação e os recursos externos como frameworks e banco de dados.
+- A CA (clean architecture) é um modelo que tem como objetivo desacoplar as regras de negócio, ou domínio, da aplicação e os recursos externos como frameworks e banco de dados.
 
 ### UseCases
 
@@ -8,7 +8,7 @@
 
 - O cliente (usuário final ou outro sistema que consome a minha API) consome aquele código? Se sim, é usecase. 
 
-- Exemplos: Signup, GetAccout, RequestRide, GetRide...
+- Exemplos: `Signup`, `GetAccout`, `RequestRide`, `GetRide`...
 
 - Calcular distância para calcular o frete não é um usecase, pois o cálculo da distância é de uso interno.
 
@@ -36,6 +36,7 @@
 ### Interface adapters
 
 - Fazem a ponte entre os casos de uso e os recursos externos.
+
     - Tratamento de requisições e respostas HTTP, lidando com parâmetros.
     - Acesso ao banco de dados, todo o código SQL pertence à esta camada.
     - Integração com uma API externa.

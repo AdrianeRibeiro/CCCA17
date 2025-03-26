@@ -17,7 +17,7 @@
 - Abstraem regras de negócio independentes, tem identidade e estado, podendo sofrer mutação ao longo do tempo.
 
 - Exemplos:
-    - Account: O passageiro ou moterista pode ter sua conta bloqueada, a placa do carro modificada, a senha redefinida.
+    - Account: o passageiro ou motorista pode ter sua conta bloqueada, a placa do carro modificada, a senha redefinida.
     - Ride: Uma corrida pode ter o status em andamento ou finalizada.
 
 ### Value Objects <VO>
@@ -30,7 +30,7 @@
     - É substituido quando seu valor mudar.
     - Pode ser comparado pelo valor que representa.
 
-- Exemplos:CPF, Senha, Coordenadas, Segmento.
+- Exemplos: CPF, Senha, Coordenadas, Segmento.
 
 - Uma técnica para identificar um value object é tentar substituí-lo por um tipo primitivo como uma string ou um número.
 
@@ -41,9 +41,9 @@
 - É indicado quando a operação que você quer executar não pertence a uma entity ou a um value object.
 
 - Exemplos:
-    - DistanceCalculator: pegando duas coordenadas retorna a distância.
-    - FareCalculator: calcula o valor de um segmento da corrida.
-    - TokenGenerator: gera um token de acordo com um email.
+    - `DistanceCalculator`: pegando duas coordenadas retorna a distância.
+    - `FareCalculator`: calcula o valor de um segmento da corrida.
+    - `TokenGenerator`: gera um token de acordo com um email.
 
 - Utilize em operações que envolvem múltiplos objetos de domínio.
     - Normalmente quando uma operação afeta múltiplos objetos de domínio, não pertencendo a nenhum deles, ela deve ser descrita em um domain service.
