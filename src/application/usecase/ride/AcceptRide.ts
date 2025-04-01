@@ -13,7 +13,7 @@ export default class AcceptRide implements UseCase {
 
     const ride = await this.rideRepository.getRideById(input.rideId)
     ride.accept(input.driverId)
-    await this.rideRepository.saveRide(ride)
+    await this.rideRepository.updateRide(ride)
   }
 }
 

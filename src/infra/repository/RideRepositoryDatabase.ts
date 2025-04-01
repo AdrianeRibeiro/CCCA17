@@ -20,4 +20,8 @@ export default class RideRepositoryDatabase implements RideRepository {
     const [rideData] = await this.connection.query("select count(*)::int as count from cccat17.ride where passenger_id = $1 and status in ('accepted', 'requested', 'in_progress')", [passengerId])
     return rideData.count > 0
   }
+
+  async updateRide(ride: Ride): Promise<void> {
+    await this.connection.query("update cccat17.ride set driver_id = $1, status = $2 where ride_id = $3", [ride.driverId, ride.status, ride.rideId]);
+  }
 }

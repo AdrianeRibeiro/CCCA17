@@ -1,4 +1,3 @@
-import Ride from "../../../domain/entity/Ride";
 import RideRepository from "../../repository/RideRepository";
 import UseCase from "../UseCase";
 
@@ -12,6 +11,7 @@ export default class GetRide implements UseCase {
     return {
       rideId: ride.rideId,
       passengerId: ride.passengerId,
+      driverId: ride.driverId,
       fromLat: ride.getFrom().getLat(),
       fromLong: ride.getFrom().getLong(),
       toLat: ride.getTo().getLat(),
@@ -25,6 +25,7 @@ export default class GetRide implements UseCase {
 type Output = {
   rideId: string,
   passengerId: string,
+  driverId: string,
   fromLat: number,
   fromLong: number,
   toLat: number,

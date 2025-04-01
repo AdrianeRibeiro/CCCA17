@@ -37,7 +37,7 @@ export default class Ride {
   }
 
   accept(driverId: string) {
-    if(this.status !== "requested" || driverId) throw new Error()
+    if(this.status !== "requested") throw new Error("")
     this.driverId = driverId
     this.status = "accepted"
   }

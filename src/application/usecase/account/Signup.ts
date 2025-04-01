@@ -29,7 +29,7 @@ type Input = {
   email: string,
   cpf: string,
   carPlate?: string,
-  isPassenger: boolean,
+  isPassenger?: boolean,
   isDriver?: boolean
 }
 
