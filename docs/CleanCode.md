@@ -13,13 +13,13 @@
 
 ```js
 function calculateDiscount(amount, p) {
-  const disc = (amount * p)/100;
+  const disc = (amount * p) / 100;
   return disc;
 }
 
 // refactor
 function calculateDiscount(amount, percentage) {
-  const discount = (amount * percentage)/100;
+  const discount = (amount * percentage) / 100;
   return discount;
 }
 ```
@@ -62,7 +62,6 @@ function isOvernight (hour) {
 }
 
 function calculateRide(hour, distance) {
-  const isOvernight = hour > 22 || hour < 6;
   if (isOvernight(hour)) {
     return distance * 3.90;
   } else {
@@ -76,7 +75,7 @@ function calculateRide(hour, distance) {
 - Extrair método
 
 ```js
-function calculatePenalty (amount, percentage) {
+function calculatePenalty(amount, percentage) {
   if (today.getTime() < dueDate.getTime()) return 0;
   return (amount * percentage)/100;
 }
@@ -88,11 +87,11 @@ function calculateInterest(amount, percentage, dueDate) {
 }
 
 // refactor
-function isOverdue (dueDate) {
+function isOverdue(dueDate) {
   return today.getTime() > dueDate.getTime(); 
 }
 
-function calculatePenalty (amount, percentage) {
+function calculatePenalty(amount, percentage) {
   if (!isOverdue(dueDate)) return 0;
   return (amount * percentage)/100;
 }
@@ -138,10 +137,9 @@ async function sendEmailCampaign(campaign) {
     await send(campaign, recipient)
   }
 }
-
 ```
 
-### Introduzir comando ternário
+#### Introduzir comando ternário
 
 ```js
 function getClass(element) {
@@ -159,7 +157,7 @@ function getClass(element) {
 ```
 
 
-### Remover comando ternário
+#### Remover comando ternário
 
 ```js
 function calculateTax(amount, last12monthRevenue) {
