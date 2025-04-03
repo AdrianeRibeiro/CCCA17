@@ -1,3 +1,37 @@
+### O que é um teste automatizado?
+
+- Dado um conjunto de entradas, quando algo acontecer a saída deve suprir as expectativas.
+
+- Given/Arrange: Definição de todas as informações necessárias para executar o comportamento que será testado.
+
+- When/Act: Executar o comportamento.
+
+- Then/Assert: Verificar o que aconteceu após a execução, comparando as informações retornadas com a expectativa que foi criada.
+
+### First
+
+- Fast: os testes devem rodar rápido
+
+- Independent: não deve existir dependência entre os testes, eles devem poder ser executados de forma isolada.
+
+- Repeatable: o resultado deve ser o mesmo independente da quantidade de vezes que seja executado.
+
+- Self-validating: o próprio teste deve ter uma saída bem definida que é válida ou não fazendo com que ele passe ou falhe.
+
+- Timely: os testes devem ser escritos antes do código fonte.
+
+### TDD
+
+- É um método para construir software, não para testá-lo.
+
+#### Three Laws of TDD
+
+- Você não pode escrever nenhum código até ter *escrito um teste que detecte uma possível falha*.
+
+- Você não pode escrever mais testes de unidade do que o *suficiente para detectar a falha*.
+
+- Você não pode escrever mais código do que o *suficiente para passar nos testes*.
+
 ### Unit Tests
 
 - São testes de unidade que não representam um requisito funcional e sem qualquer interação com recursos externos como um banco de dados, uma API ou o sistema de arquivos.
