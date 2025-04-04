@@ -1,5 +1,6 @@
 import crypto from "crypto"
 import Coord from "../vo/Coord"
+import Account from "./Account"
 
 // Entity forma um Aggregate liderado por Ride (root) que contém Coord
 export default class Ride {
@@ -36,9 +37,15 @@ export default class Ride {
     return this.to
   }
 
-  accept(driverId: string) {
-    if(this.status !== "requested") throw new Error("")
-    this.driverId = driverId
+  accept(account: Account) {
+    if(!account.isDriver) throw new Error("Account is not a driver")
+    if(this.status !== "requested") throw new Error("Invalid status")
+    this.driverId = account.accountId
     this.status = "accepted"
+  }
+
+  start() {
+    if(this.status !== "accepted") throw new Error("Invalid status")
+    this.status = "in_progress"
   }
 }
