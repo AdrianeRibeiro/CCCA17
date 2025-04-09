@@ -7,6 +7,7 @@ import StartRide from "../../src/application/usecase/ride/StartRide";
 import DatabaseConnection, { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection";
 import MailerGatewayFake from "../../src/infra/gateway/MailerGatewayFake";
 import { AccountRepositoryDatabase } from "../../src/infra/repository/AccountRepository";
+import PositionRepositoryDatabase from "../../src/infra/repository/PositionRepositoryDatabase";
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 
 let connection: DatabaseConnection
@@ -24,7 +25,8 @@ beforeEach(function () {
 	signup = new Signup(accountRepository, mailerGateway)
   const rideRepository = new RideRepositoryDatabase(connection);
   requestRide = new RequestRide(rideRepository, accountRepository)
-  getRide = new GetRide(rideRepository)
+  const positionRepository = new PositionRepositoryDatabase(connection);
+  getRide = new GetRide(rideRepository, accountRepository,positionRepository)
   acceptRide = new AcceptRide(rideRepository, accountRepository)
   startRide = new StartRide(rideRepository)
 })

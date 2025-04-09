@@ -12,6 +12,8 @@
 
 - Calcular distância para calcular o frete não é um usecase, pois o cálculo da distância é de uso interno.
 
+- Não retorna um objeto de domínio.
+
 #### Caso de uso é diferente do CRUD? 
 
 - Caso de Uso e CRUD são conceitos diferentes, embora possam se relacionar.

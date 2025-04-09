@@ -1,6 +1,8 @@
 import crypto from "crypto"
 import Coord from "../vo/Coord"
 import Account from "./Account"
+import Position from "./Position"
+import Segment from "../vo/Segment"
 
 // Entity forma um Aggregate liderado por Ride (root) que contém Coord
 export default class Ride {
@@ -16,7 +18,8 @@ export default class Ride {
     toLat: number, 
     toLong: number,
     public status: string,
-    readonly date: Date
+    readonly date: Date,
+    public distance: number
   ) {
     this.from = new Coord(fromLat, fromLong)
     this.to = new Coord(toLat, toLong)
@@ -26,7 +29,8 @@ export default class Ride {
     const rideId = crypto.randomUUID()
     const status = "requested"
     const date = new Date()
-    return new Ride(rideId, passengerId, "", fromLat, fromLong, toLat, toLong, status, date)
+    const distance = 0
+    return new Ride(rideId, passengerId, "", fromLat, fromLong, toLat, toLong, status, date, distance)
   }
 
   getFrom() {
@@ -47,5 +51,12 @@ export default class Ride {
   start() {
     if(this.status !== "accepted") throw new Error("Invalid status")
     this.status = "in_progress"
+  }
+
+  updatePosition(lastPosition: Position, currentPosition: Position) {
+    if(this.status !== "in_progress") throw new Error("Invalid status")
+    
+    const segment = new Segment(lastPosition.coord, currentPosition.coord)
+    this.distance += segment.getDistance()
   }
 }

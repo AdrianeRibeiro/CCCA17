@@ -18,3 +18,9 @@ repository: interface adapter
 api: interface adapter
 
 
+docker-compose down -v
+
+psql -U postgres -d app
+\dt cccat17.*
+
+
