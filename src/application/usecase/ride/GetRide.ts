@@ -29,7 +29,8 @@ export default class GetRide implements UseCase {
       date: ride.date,
       currentLat: lastPosition?.lat,
       currentLong: lastPosition?.long,
-      distance: ride.distance
+      distance: ride.distance,
+      fare: ride.fare
     }
   }
 }
@@ -47,5 +48,6 @@ type Output = {
   date: Date,
   currentLat?: number,
   currentLong?: number,
-  distance: number
+  distance: number,
+  fare: number
 }

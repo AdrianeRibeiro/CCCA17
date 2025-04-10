@@ -23,5 +23,5 @@ type Input = {
   rideId: string,
   lat: number,
   long: number,
-  date?: Date
+  date: Date
 }
