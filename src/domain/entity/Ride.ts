@@ -3,6 +3,7 @@ import Coord from "../vo/Coord"
 import Account from "./Account"
 import Position from "./Position"
 import Segment from "../vo/Segment"
+import FareCalculator, { FareCalculatorFactory } from "../service/FareCalculator"
 
 // Entity forma um Aggregate liderado por Ride (root) que contém Coord
 export default class Ride {
@@ -58,21 +59,8 @@ export default class Ride {
   updatePosition(lastPosition: Position, currentPosition: Position) {
     if(this.status !== "in_progress") throw new Error("Invalid status")
     const segment = new Segment(lastPosition.coord, currentPosition.coord)
-    this.distance += segment.getDistance()
-
-    if(currentPosition.date.getDay() === 0) {
-      this.fare += this.distance * 5
-      return
-    }
-
-    if(currentPosition.date.getHours() > 18 || currentPosition.date.getHours() < 8) {
-      this.fare += this.distance * 3.9
-      return
-    }
-
-    if(currentPosition.date.getHours() >= 0 && currentPosition.date.getHours() <= 18) {
-      this.fare += this.distance * 2.1
-      return
-    }
+    const distance = segment.getDistance()
+    this.distance += distance
+    this.fare += FareCalculatorFactory.create(currentPosition.date).calculate(distance)
   }
 }
