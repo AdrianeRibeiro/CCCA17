@@ -18,7 +18,8 @@ export default class Account {
     cpf: string, 
     carPlate: string, 
     readonly isPassenger: boolean, 
-    readonly isDriver: boolean
+    readonly isDriver: boolean,
+    readonly password: string
   ) {
     this.name = new Name(name)
     this.email = new Email(email)
@@ -27,9 +28,9 @@ export default class Account {
   }
 
   // static factory method: construtor alternativo 
-  static create(name: string, email: string, cpf: string, carPlate: string, isPassenger: boolean, isDriver: boolean) {
+  static create(name: string, email: string, cpf: string, carPlate: string, isPassenger: boolean, isDriver: boolean, password: string = "") {
     const accountId = crypto.randomUUID()
-    return new Account(accountId, name, email, cpf, carPlate, isPassenger, isDriver)
+    return new Account(accountId, name, email, cpf, carPlate, isPassenger, isDriver, password)
   }
 
   getCpf() {
