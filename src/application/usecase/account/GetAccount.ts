@@ -19,7 +19,7 @@ export default class GetAccount implements UseCase {
       carPlate: account.getCarPlate(),
       isPassenger: account.isPassenger,
       isDriver: account.isDriver,
-      password: account.password
+      password: account.getPassword()
     }
   }  
 }
