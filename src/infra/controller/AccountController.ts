@@ -18,8 +18,8 @@ export default class AccountController {
   private build() {
     this.httpServer.register("post", "/signup", async (params: any, body: any) => {
 			const input = body
-      //const output = await this.signup.execute(input)
-      const output = await Registry.getInstance().inject("signup").execute(input)
+      const output = await this.signup?.execute(input)
+      //const output = await Registry.getInstance().inject("signup").execute(input)
 			return output
 		})
 		
