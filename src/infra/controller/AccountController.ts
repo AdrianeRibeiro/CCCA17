@@ -1,10 +1,11 @@
 import GetAccount from "../../application/usecase/account/GetAccount";
 import Signup from "../../application/usecase/account/Signup";
-import Registry from "../di/Registry";
+import Registry, { inject } from "../di/Registry";
 import HttpServer from "../http/HttpServer";
 
 export default class AccountController {
-  app: any
+  @inject("signup")
+  signup?: Signup
 
   constructor(
     readonly httpServer: HttpServer, 
