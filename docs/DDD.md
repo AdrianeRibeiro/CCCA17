@@ -1,8 +1,13 @@
 ### Domínio:
 
-- É o problema, em termos de negócio, que precisa ser resolvido independente da tecnologia que será utilizada.
+- É o problema, em termos de negócio, que precisa ser resolvido independente da tecnologia que será utilizada. Ex: "logística", "educação", "finanças".
 
 - Complementa a camada de entities do Clean Architecture.
+
+### Modelo de Domínio:
+
+É uma representação conceitual (e depois, em código) do domínio. É onde moram as regras de negócio.
+
 
 ### Objetos de Domínio
 
@@ -14,6 +19,8 @@
 
 ### Entities <E>
 
+- Objetos com identidade única (Ex: Usuário, Pedido). O que importa é o quem, não o quê.
+
 - Abstraem regras de negócio independentes, tem identidade e estado, podendo sofrer mutação ao longo do tempo.
 
 - Exemplos:
@@ -21,6 +28,8 @@
     - Ride: Uma corrida pode ter o status em andamento ou finalizada.
 
 ### Value Objects <VO>
+
+- Objetos imutáveis, sem identidade (ex: Endereço, CPF)
 
 - Também contém regras de negócio independentes, no entando são identificados pelo seu valor, sendo imutáveis, ou seja, a mudança implica na sua substituição. Seu papel é proteger esse valor.
 
@@ -56,6 +65,8 @@
 
 ### Aggregates
 
+- Conjunto de entidades e VO que formam uma unidade de consistência.
+
 - Um aggregate é um agrupamento, ou cluster, de objetos de domínio como entities e value objects, estabelecendo o relacionamento entre eles. Exemplo: um Pedido que contém Itens do Pedido.
 
 - Todas as operações são realizadas por meio da raíz, que é uma entity ou aggregate root <AR>.
@@ -78,6 +89,8 @@
     - Não é ideal, uma mudança na entidade utilizada por um aggregate poderia causar a quebra em outro.
 
 ### Repositories
+
+- Abstrações para acesssar os dados de agregados.
 
 - É uma extensão do domínio responsável por realizar a persistência dos aggregate separando o domínio da infraestrutura.
 
