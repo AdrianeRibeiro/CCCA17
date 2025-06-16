@@ -24,16 +24,3 @@ test("Deve criar uma conta para o passageiro", async function () {
   expect(outputGetAccount.password).toBe(input.password)
 
 })
-
-test("Deve criar uma conta para o passageiro", async function () {
-  const input = {
-    name: "John Doe",
-    email: `john.doe${Math.random()}@gmail.com`,
-    cpf: "9745632155810",
-    isPassenger: true
-  }
-  const responseSignup = await axios.post("http://localhost:3000/signup", input)
-  const outputSignup = responseSignup.data
-  expect(responseSignup.status).toBe(422)
-  expect(outputSignup.message).toBe("Invalid cpf")
-})

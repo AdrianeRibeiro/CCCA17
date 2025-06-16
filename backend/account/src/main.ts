@@ -20,4 +20,4 @@ Registry.getInstance().provide("signup", signup)
 Registry.getInstance().provide("getAccount", getAccount)
 new AccountController(httpServer)
 
-httpServer.listen(3000)
+httpServer.listen(3001)
