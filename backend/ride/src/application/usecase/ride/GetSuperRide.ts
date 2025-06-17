@@ -1,5 +1,3 @@
-import Ride from "../../../domain/entity/Ride";
-import RideRepository from "../../repository/RideRepository";
 import SuperRideRepository from "../../repository/SuperRideRepository";
 import UseCase from "../UseCase";
 

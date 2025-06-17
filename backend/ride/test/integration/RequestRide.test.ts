@@ -1,28 +1,22 @@
-import MailerGateway from "../../src/application/gateway/MailerGateway";
-import Signup from "../../src/application/usecase/account/Signup";
 import GetRide from "../../src/application/usecase/ride/GetRide";
 import RequestRide from "../../src/application/usecase/ride/RequestRide";
 import DatabaseConnection, { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection";
-import MailerGatewayFake from "../../src/infra/gateway/MailerGatewayFake";
-import { AccountRepositoryDatabase } from "../../src/infra/repository/AccountRepository";
+import AccountGatewayHttp from "../../src/infra/gateway/AccountGatewayHttp";
 import PositionRepositoryDatabase from "../../src/infra/repository/PositionRepositoryDatabase";
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 
 let connection: DatabaseConnection
-let signup: Signup
-let mailerGateway: MailerGateway
 let requestRide: RequestRide
 let getRide: GetRide
+let accountGateway: AccountGatewayHttp
 
 beforeEach(function () {
   connection = new PgPromiseAdapter();
-  const accountRepository = new AccountRepositoryDatabase(connection);
-  mailerGateway = new MailerGatewayFake()
-	signup = new Signup(accountRepository, mailerGateway)
   const rideRepository = new RideRepositoryDatabase(connection);
-  requestRide = new RequestRide(rideRepository, accountRepository)
   const positionRepository = new PositionRepositoryDatabase(connection);
-  getRide = new GetRide(rideRepository, accountRepository, positionRepository)
+  accountGateway = new AccountGatewayHttp()
+  requestRide = new RequestRide(rideRepository, accountGateway)
+  getRide = new GetRide(rideRepository, accountGateway, positionRepository)
 })
 
 test("Deve solicitar uma corrida", async function () {
@@ -32,7 +26,7 @@ test("Deve solicitar uma corrida", async function () {
     cpf: "97456321558",
     isPassenger: true
   }
-  const outputSignup = await signup.execute(input)
+  const outputSignup = await accountGateway.signup(input)
 
   const inputRequestRide = {
     passengerId: outputSignup.accountId,
@@ -65,7 +59,7 @@ test("Não deve poder solicitar uma corrida se a conta não for de um passageiro
     isPassenger: false,
     isDriver: true
   }
-  const outputSignup = await signup.execute(input)
+  const outputSignup = await accountGateway.signup(input)
 
   const inputRequestRide = {
     passengerId: outputSignup.accountId,
@@ -85,7 +79,7 @@ test("Não deve poder solicitar uma corrida se o passageiro já tiver uma corrid
     cpf: "97456321558",
     isPassenger: true
   }
-  const outputSignup = await signup.execute(input)
+  const outputSignup = await accountGateway.signup(input)
 
   const inputRequestRide = {
     passengerId: outputSignup.accountId,

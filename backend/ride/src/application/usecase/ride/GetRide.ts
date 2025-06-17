@@ -1,4 +1,4 @@
-import AccountRepository from "../../repository/AccountRepository";
+import AccountGateway from "../../gateway/AccountGateway";
 import PositionRepository from "../../repository/PositionRepository";
 import RideRepository from "../../repository/RideRepository";
 import UseCase from "../UseCase";
@@ -7,20 +7,20 @@ export default class GetRide implements UseCase {
 
   constructor(
     readonly rideRepository: RideRepository, 
-    readonly accountRepository: AccountRepository, 
+    readonly accountGateway: AccountGateway, 
     readonly positionRepository: PositionRepository
   ) {}
 
   async execute(rideId: string): Promise<Output> {
     const ride = await this.rideRepository.getRideById(rideId)
-    const passenger = await this.accountRepository.getAccountById(ride.passengerId)
+    const passenger = await this.accountGateway.getAccountById(ride.passengerId)
     const lastPosition = await this.positionRepository.getLastPositionFromRideId(rideId)
 
     return {
       rideId: ride.rideId,
       passengerId: ride.passengerId,
       driverId: ride.driverId,
-      passengerName: passenger.getName(),
+      passengerName: passenger.name,
       fromLat: ride.getFrom().getLat(),
       fromLong: ride.getFrom().getLong(),
       toLat: ride.getTo().getLat(),

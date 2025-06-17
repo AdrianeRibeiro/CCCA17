@@ -1,4 +1,3 @@
-import Account from "../../src/domain/entity/Account"
 import Position from "../../src/domain/entity/Position"
 import Ride from "../../src/domain/entity/Ride"
 
@@ -8,7 +7,7 @@ test("Não deve criar uma corrida com coordenada inválida", function () {
 
 test("Deve calcular a distância da corrida", function () {
   const ride = Ride.create("", 0, 0, 0, 0)
-  const account = Account.create("John Doe", "john.doe@gmail.com", "97456321558", "AAA9999", false, true)
+  const account = { accountId: "1", isDriver: true }
   ride.accept(account)
   ride.start()
   

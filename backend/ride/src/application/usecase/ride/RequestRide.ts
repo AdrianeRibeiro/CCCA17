@@ -1,14 +1,14 @@
 import Ride from "../../../domain/entity/Ride";
-import AccountRepository from "../../repository/AccountRepository";
+import AccountGateway from "../../gateway/AccountGateway";
 import RideRepository from "../../repository/RideRepository";
 import UseCase from "../UseCase";
 
 export default class RequestRide implements UseCase {
 
-  constructor(readonly rideRepository: RideRepository, readonly accountRepository: AccountRepository) {}
+  constructor(readonly rideRepository: RideRepository, readonly accountGateway: AccountGateway) {}
 
   async execute(input: Input): Promise<Output> {
-    const account = await this.accountRepository.getAccountById(input.passengerId)
+    const account = await this.accountGateway.getAccountById(input.passengerId)
     if (!account.isPassenger) throw new Error("Account is not a passenger")
 
     const hasActiveRide = await this.rideRepository.hasActiveRideByPassengerId(input.passengerId)

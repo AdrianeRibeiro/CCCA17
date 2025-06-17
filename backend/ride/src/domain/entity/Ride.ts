@@ -1,6 +1,5 @@
 import crypto from "crypto"
 import Coord from "../vo/Coord"
-import Account from "./Account"
 import Position from "./Position"
 import Segment from "../vo/Segment"
 import FareCalculator, { FareCalculatorFactory } from "../service/FareCalculator"
@@ -44,7 +43,7 @@ export default class Ride {
     return this.to
   }
 
-  accept(account: Account) {
+  accept(account: any) {
     if(!account.isDriver) throw new Error("Account is not a driver")
     if(this.status !== "requested") throw new Error("Invalid status")
     this.driverId = account.accountId

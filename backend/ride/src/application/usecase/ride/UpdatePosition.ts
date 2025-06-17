@@ -1,6 +1,4 @@
 import Position from "../../../domain/entity/Position";
-import DistanceCalculator from "../../../domain/service/DistanceCalculator";
-import Segment from "../../../domain/vo/Segment";
 import PositionRepository from "../../repository/PositionRepository";
 import RideRepository from "../../repository/RideRepository";
 import UseCase from "../UseCase";

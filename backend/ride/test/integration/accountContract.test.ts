@@ -12,11 +12,11 @@ test("Deve criar uma conta para o passageiro", async function () {
     isPassenger: true,
     password: "123456"
   }
-  const responseSignup = await axios.post("http://localhost:3000/signup", input)
+  const responseSignup = await axios.post("http://localhost:3001/signup", input)
   const outputSignup = responseSignup.data
   expect(outputSignup.accountId).toBeDefined()
 
-  const responseGetAccount = await axios.get(`http://localhost:3000/accounts/${outputSignup.accountId}`)
+  const responseGetAccount = await axios.get(`http://localhost:3001/accounts/${outputSignup.accountId}`)
   const outputGetAccount = responseGetAccount.data
   expect(outputGetAccount.name).toBe(input.name)
   expect(outputGetAccount.email).toBe(input.email)
