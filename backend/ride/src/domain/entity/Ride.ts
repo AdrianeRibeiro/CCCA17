@@ -55,6 +55,11 @@ export default class Ride {
     this.status = "in_progress"
   }
 
+  finish() {
+    if(this.status !== "in_progress") throw new Error("Invalid status")
+    this.status = "completed"
+  }
+
   updatePosition(lastPosition: Position, currentPosition: Position) {
     if(this.status !== "in_progress") throw new Error("Invalid status")
     const segment = new Segment(lastPosition.coord, currentPosition.coord)
