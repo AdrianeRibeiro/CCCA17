@@ -6,6 +6,7 @@ import StartRide from "../../src/application/usecase/ride/StartRide";
 import UpdatePosition from "../../src/application/usecase/ride/UpdatePosition";
 import DatabaseConnection, { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection";
 import AccountGatewayHttp from "../../src/infra/gateway/AccountGatewayHttp";
+import { AxiosAdapter } from "../../src/infra/http/HttpClient";
 import PositionRepositoryDatabase from "../../src/infra/repository/PositionRepositoryDatabase";
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 
@@ -20,7 +21,8 @@ let finishRide: FinishRide
 
 beforeEach(function () {
   connection = new PgPromiseAdapter();
-  accountGateway = new AccountGatewayHttp()
+  const httpClient = new AxiosAdapter()
+  accountGateway = new AccountGatewayHttp(httpClient)
   const rideRepository = new RideRepositoryDatabase(connection);
   const positionRepository = new PositionRepositoryDatabase(connection);
 
