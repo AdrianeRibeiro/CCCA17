@@ -1,3 +1,5 @@
+import GenerateInvoice from "../../src/application/usecase/invoice/GenerateInvoice";
+import ProcessPayment from "../../src/application/usecase/payment/ProcessPayment";
 import AcceptRide from "../../src/application/usecase/ride/AcceptRide";
 import FinishRide from "../../src/application/usecase/ride/FinishRide";
 import GetRide from "../../src/application/usecase/ride/GetRide";
@@ -7,6 +9,7 @@ import UpdatePosition from "../../src/application/usecase/ride/UpdatePosition";
 import DatabaseConnection, { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection";
 import AccountGatewayHttp from "../../src/infra/gateway/AccountGatewayHttp";
 import { AxiosAdapter } from "../../src/infra/http/HttpClient";
+import Mediator from "../../src/infra/mediator/Mediator";
 import PositionRepositoryDatabase from "../../src/infra/repository/PositionRepositoryDatabase";
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 
@@ -31,7 +34,16 @@ beforeEach(function () {
   acceptRide = new AcceptRide(rideRepository, accountGateway)
   startRide = new StartRide(rideRepository)
   updatePosition = new UpdatePosition(rideRepository, positionRepository)
-  finishRide = new FinishRide(rideRepository)
+
+  const processPayment = new ProcessPayment()
+  const generateInvoice = new GenerateInvoice()
+  const mediator = new Mediator()
+  mediator.register("rideCompleted", async function (data: any) {
+    await processPayment.execute(data)
+    await generateInvoice.execute(data)
+  })
+
+  finishRide = new FinishRide(rideRepository, mediator)
 })
 
 test("Deve finalizar uma corrida", async function () {

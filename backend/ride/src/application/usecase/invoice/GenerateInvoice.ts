@@ -1,8 +1,8 @@
-export default class ProcessPayment {
+export default class GenerateInvoice {
   constructor() {}
 
   async execute(input: Input): Promise<void> {
-    console.log("processPayment", input)
+    console.log("generateInvoice", input)
   }
 }
 
