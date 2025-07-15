@@ -8,6 +8,7 @@ import StartRide from "../../src/application/usecase/ride/StartRide";
 import UpdatePosition from "../../src/application/usecase/ride/UpdatePosition";
 import DatabaseConnection, { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection";
 import AccountGatewayHttp from "../../src/infra/gateway/AccountGatewayHttp";
+import PaymentGatewayHttp from "../../src/infra/gateway/PaymentGatewayHttp";
 import { AxiosAdapter } from "../../src/infra/http/HttpClient";
 import Mediator from "../../src/infra/mediator/Mediator";
 import PositionRepositoryDatabase from "../../src/infra/repository/PositionRepositoryDatabase";
@@ -38,12 +39,12 @@ beforeEach(function () {
   const processPayment = new ProcessPayment()
   const generateInvoice = new GenerateInvoice()
   const mediator = new Mediator()
-  mediator.register("rideCompleted", async function (data: any) {
-    await processPayment.execute(data)
-    await generateInvoice.execute(data)
-  })
-
-  finishRide = new FinishRide(rideRepository, mediator)
+  // mediator.register("rideCompleted", async function (data: any) {
+  //   await processPayment.execute(data)
+  //   await generateInvoice.execute(data)
+  // })
+  const paymentGateway = new PaymentGatewayHttp(httpClient)
+  finishRide = new FinishRide(rideRepository, mediator, paymentGateway)
 })
 
 test("Deve finalizar uma corrida", async function () {
