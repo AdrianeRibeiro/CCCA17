@@ -1,4 +1,5 @@
 import amqp from "amqplib"
+import crypto from "crypto"
 
 async function main() {
   const connection = await amqp.connect("amqp://localhost")

@@ -11,6 +11,7 @@ import AccountGatewayHttp from "../../src/infra/gateway/AccountGatewayHttp";
 import PaymentGatewayHttp from "../../src/infra/gateway/PaymentGatewayHttp";
 import { AxiosAdapter } from "../../src/infra/http/HttpClient";
 import Mediator from "../../src/infra/mediator/Mediator";
+import Queue, { RabbitMQAdapter } from "../../src/infra/queue/Queue";
 import PositionRepositoryDatabase from "../../src/infra/repository/PositionRepositoryDatabase";
 import RideRepositoryDatabase from "../../src/infra/repository/RideRepositoryDatabase";
 
@@ -22,8 +23,9 @@ let startRide: StartRide
 let updatePosition: UpdatePosition
 let accountGateway: AccountGatewayHttp
 let finishRide: FinishRide
+let queue: Queue
 
-beforeEach(function () {
+beforeEach(async function () {
   connection = new PgPromiseAdapter();
   const httpClient = new AxiosAdapter()
   accountGateway = new AccountGatewayHttp(httpClient)
@@ -44,7 +46,9 @@ beforeEach(function () {
   //   await generateInvoice.execute(data)
   // })
   const paymentGateway = new PaymentGatewayHttp(httpClient)
-  finishRide = new FinishRide(rideRepository, mediator, paymentGateway)
+  queue = new RabbitMQAdapter()
+  await queue.connect()
+  finishRide = new FinishRide(rideRepository, mediator, paymentGateway, queue)
 })
 
 test("Deve finalizar uma corrida", async function () {
@@ -112,4 +116,7 @@ test("Deve finalizar uma corrida", async function () {
 
 afterEach(async () => {
   await connection.close()
+  setTimeout(async () => {
+    await queue.disconnect()
+  }, 500)
 })
