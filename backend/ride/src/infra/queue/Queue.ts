@@ -32,13 +32,18 @@ export class RabbitMQAdapter implements Queue {
     const channel = await this.connection.createChannel()
     channel.consume(queue, async function(message: any) {
       const input = JSON.parse(message.content.toString())
-      await callback(input)
-      channel.ack(message)
+      try {
+        await callback(input)
+        channel.ack(message)
+      } catch (error: any) {
+        console.log("could not process message, keeping in the queue", error.message)
+      }
     })
   }
 
   async publish(exchange: string, data: any): Promise<void> {
     const channel = await this.connection.createChannel()
+    this.setup(exchange, exchange)
     channel.publish(exchange, "", Buffer.from(JSON.stringify(data)))
   }
 }

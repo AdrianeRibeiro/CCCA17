@@ -48,3 +48,34 @@
 - Compensable Transaction: são desfeitas caso a transação toda seja abortada.
 
 - Retriable Transaction: tem uma garantia de execução e podem se recuperar de uma possível falha ou indisposição.
+
+### Orquestração: 
+
+- Orquestrado: Existe uma lógica centralizada que faz a cordenação de cada um dos passos.
+- Coreografado: cada participante publica e trata eventos de forma independente, decidindo como realizar a sua parte. Exemplo: Message broker.
+
+## Arquitetura orientada a eventos
+
+- É uma solução para transações distribuídas em um ambiente de microserviços
+- Baixo acoplamente, de forma assíncrona, e sem a necessidade de um orquestrador.
+
+### Evento
+
+- São fatos que aconteceram no domínio e que podem ser um gatilho para a execução de regras de negócio
+- Exemplo: OrderPlaced, PaymentApproved, InvoiceGenerated, RideRequested, RideEnded, PositionUpdated
+- PRODUCER -> EVENT BROKER -> CONSUMER
+- Fila é necessária, pois não existem recursos suficientes disponíveis
+
+### Benefícios
+
+- Baixo acoplamento
+- Tolerância a falha com capacidade para retormar o processamento do ponto onde parou
+- Disponibilidade e escalabilidade mais alta
+- Menos custos com infra
+
+### Desafios
+
+- Complexidade técnica mais alta
+- Lidar com a duplicação de eventos
+- Falta de clareza no workflow
+- Dificuldade em tratar e diagnosticar erros

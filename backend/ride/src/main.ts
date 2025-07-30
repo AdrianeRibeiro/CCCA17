@@ -1,12 +1,25 @@
-import { PgPromiseAdapter } from "./infra/database/DatabaseConnection";
-import { ExpressAdapter } from "./infra/http/HttpServer";
+import { PgPromiseAdapter } from "./infra/database/DatabaseConnection"
+import { ExpressAdapter } from "./infra/http/HttpServer"
+import RideController from "./infra/controller/RideController"
+import RequestRide from "./application/usecase/ride/RequestRide"
+import RideRepositoryDatabase from "./infra/repository/RideRepositoryDatabase"
+import { AxiosAdapter } from "./infra/http/HttpClient"
+import AccountGatewayHttp from "./infra/gateway/AccountGatewayHttp"
+import { RabbitMQAdapter } from "./infra/queue/Queue"
 
-import Registry from "./infra/di/Registry";
+(async () => {
+	const connection = new PgPromiseAdapter()
+	const httpServer = new ExpressAdapter()
 
-const connection = new PgPromiseAdapter();
-const httpServer = new ExpressAdapter()
-/* injeção de dependência
-new AccountController(httpServer, signup, getAccount)
-*/
+  const rideRepository = new RideRepositoryDatabase(connection)
+	const httpClient = new AxiosAdapter()
+	const accountGateway = new AccountGatewayHttp(httpClient)
+	const requestRide = new RequestRide(rideRepository, accountGateway)
 
-httpServer.listen(3000)
+	const queue = new RabbitMQAdapter()
+	await queue.connect()
+	//await queue.setup("rideCompleted", "rideCompleted.processPayment");
+	new RideController(httpServer, requestRide, queue)
+
+	httpServer.listen(3000);
+})();
