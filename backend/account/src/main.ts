@@ -6,18 +6,30 @@ import AccountController from "./infra/controller/AccountController";
 import Signup from "./application/usecase/account/Signup";
 import GetAccount from "./application/usecase/account/GetAccount";
 import Registry from "./infra/di/Registry";
+import { RabbitMQAdapter } from "./infra/queue/Queue";
+import QueueController from "./infra/controller/QueueController";
 
-const connection = new PgPromiseAdapter();
-const accountRepository = new AccountRepositoryDatabase(connection)
-const signup = new Signup(accountRepository)
-const getAccount = new GetAccount(accountRepository)
-const httpServer = new ExpressAdapter()
-/* injeção de dependência
-new AccountController(httpServer, signup, getAccount)
-*/
+(async () => {
+    const connection = new PgPromiseAdapter();
+    const accountRepository = new AccountRepositoryDatabase(connection)
+    const signup = new Signup(accountRepository)
+    const getAccount = new GetAccount(accountRepository)
 
-Registry.getInstance().provide("signup", signup)
-Registry.getInstance().provide("getAccount", getAccount)
-new AccountController(httpServer)
+    const httpServer = new ExpressAdapter()
+    /* injeção de dependência
+    new AccountController(httpServer, signup, getAccount)
+    */
 
-httpServer.listen(3001)
+    const queue = new RabbitMQAdapter()
+    await queue.connect()
+    await queue.setup("signup", "signup");
+
+    Registry.getInstance().provide("signup", signup)
+    Registry.getInstance().provide("getAccount", getAccount)
+    Registry.getInstance().provide("queue", queue)
+
+    new AccountController(httpServer)
+    new QueueController()
+    
+    httpServer.listen(3001)  
+})()
