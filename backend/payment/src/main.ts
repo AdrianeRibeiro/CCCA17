@@ -6,6 +6,8 @@ import QueueController from "./infra/controller/QueueController";
 import { PgPromiseAdapter } from "./infra/database/DatabaseConnection";
 import ORM from "./infra/orm/ORM";
 import TransactionRepositoryORM from "./infra/repository/TransactionRepositoryORM";
+import PJBankGateway from "./infra/gateway/PJBankGateway";
+import CieloGateway from "./infra/gateway/CieloGateway";
 
 (async () => {
   const httpServer = new ExpressAdapter()
@@ -13,7 +15,7 @@ import TransactionRepositoryORM from "./infra/repository/TransactionRepositoryOR
   const connection = new PgPromiseAdapter()
   const orm = new ORM(connection)
   const transactionRepository = new TransactionRepositoryORM(orm)
-  const processPayment = new ProcessPayment(transactionRepository)
+  const processPayment = new ProcessPayment(transactionRepository, new PJBankGateway(), new CieloGateway())
   new PaymentController(httpServer, processPayment)
 
   const queue = new RabbitMQAdapter()
